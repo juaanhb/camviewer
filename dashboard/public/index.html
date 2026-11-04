@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>camviewer</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="brand"><i data-lucide="video"></i><span>camviewer</span><span class="dot" aria-hidden="true"></span></div>
+    <div id="cam-name" class="cam-name"></div>
+    <div class="bar-actions">
+      <button id="open-log" class="pill" type="button"><i data-lucide="terminal"></i><span>Terminal</span></button>
+      <button id="open-conn" class="pill" type="button"><i data-lucide="plug"></i><span>Conexión</span></button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <section class="viewer">
+      <div class="frame screen">
+        <canvas id="video" aria-label="Video en vivo"></canvas>
+
+        <div id="video-empty" class="standby">
+          <div class="reticle"><i data-lucide="video-off"></i></div>
+          <p>Sin señal</p>
+        </div>
+
+        <div class="hud top">
+          <span id="live-badge" class="live-badge off"><i></i><span id="live-text">Desconectado</span></span>
+        </div>
+
+        <div class="hud bottom">
+          <div class="hud-group">
+            <button id="audio-btn" class="round" title="Escuchar audio de la cámara" disabled><i data-lucide="volume-x"></i></button>
+            <button id="talk-btn" class="round" title="Mantén presionado para hablar" disabled><i data-lucide="mic"></i></button>
+          </div>
+          <button id="fs-btn" class="round" title="Pantalla completa" disabled><i data-lucide="maximize"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="rail">
+      <section class="panel">
+        <h2>Movimiento</h2>
+        <div class="dpad">
+          <button class="dir" data-dir="up" title="Arriba"><i data-lucide="arrow-up"></i></button>
+          <button class="dir" data-dir="right" title="Derecha"><i data-lucide="arrow-right"></i></button>
+          <button class="dir" data-dir="down" title="Abajo"><i data-lucide="arrow-down"></i></button>
+          <button class="dir" data-dir="left" title="Izquierda"><i data-lucide="arrow-left"></i></button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Información</h2>
+        <dl class="stats">
+          <div><dt>Sesión</dt><dd id="i-session">—</dd></div>
+          <div><dt>Resolución</dt><dd id="i-res">—</dd></div>
+          <div><dt>Códec video</dt><dd id="i-codec">—</dd></div>
+          <div><dt>Frames video</dt><dd id="i-vframes">—</dd></div>
+          <div><dt>Códec audio</dt><dd id="i-acodec">—</dd></div>
+          <div><dt>Frames audio</dt><dd id="i-aframes">—</dd></div>
+        </dl>
+      </section>
+    </aside>
+  </main>
+
+  <!-- Modal: conexión -->
+  <dialog id="conn-dialog" class="sheet term conn">
+    <form method="dialog" class="sheet-head">
+      <h2><i data-lucide="plug"></i>Conexión</h2>
+      <button class="close" value="close" title="Cerrar" aria-label="Cerrar"><i data-lucide="x"></i></button>
+    </form>
+    <form id="connect-form" class="form">
+      <section class="group">
+        <h3>Cámara</h3>
+        <div class="row-2">
+          <label class="field">DID
+            <input name="did" required placeholder="EL-DID-DE-LA-CAMARA">
+          </label>
+          <label class="field">Device Type
+            <input name="deviceType" value="184">
+          </label>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <span class="lbl">Password</span>
+          <div class="pw">
+            <input id="password" name="password" type="password" placeholder="(opcional)">
+            <button type="button" id="pw-toggle" class="pw-toggle" title="Mostrar contraseña" aria-label="Mostrar contraseña">
+              <i data-lucide="eye"></i>
+            </button>
+          </div>
+        </div>
+          <label class="field">User ID
+            <input name="userId" type="number" min="0" value="0">
+          </label>
+        </div>
+      </section>
+      <section class="group">
+        <h3>Puente</h3>
+        <div class="row-2">
+          <label class="field">Dirección IP
+            <input name="bridgeHost" value="127.0.0.1" placeholder="127.0.0.1">
+          </label>
+          <label class="field">Puerto
+            <input name="bridgePort" type="number" min="1" max="65535" value="8766">
+          </label>
+        </div>
+      </section>
+      <div class="actions">
+        <button id="connect-btn" type="submit" class="btn primary">Conectar</button>
+        <button id="disconnect-btn" type="button" class="btn" disabled>Desconectar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Modal: registro (terminal) -->
+  <dialog id="log-dialog" class="sheet term log-sheet">
+    <form method="dialog" class="sheet-head">
+      <h2><i data-lucide="terminal"></i>Terminal</h2>
+      <button class="close" value="close" title="Cerrar" aria-label="Cerrar"><i data-lucide="x"></i></button>
+    </form>
+    <ul id="log" class="log"></ul>
+  </dialog>
+
+  <script src="/vendor/lucide.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

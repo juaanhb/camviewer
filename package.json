@@ -1,0 +1,19 @@
+{
+  "name": "camviewer",
+  "version": "0.1.0",
+  "description": "Cliente Node.js simple para cámaras V360 Pro / CloudBirds (PPCS vía puente Android)",
+  "main": "bridge/camviewer.js",
+  "bin": {
+    "camviewer": "bridge/cli.js",
+    "camviewer-dashboard": "dashboard/server.js"
+  },
+  "scripts": {
+    "start": "node dashboard/server.js",
+    "test": "node --test test/protocol.test.js test/e2e.test.js test/dashboard.test.js test/aac.test.js test/video.test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "private": false
+}

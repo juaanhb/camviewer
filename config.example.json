@@ -1,0 +1,16 @@
+{
+  "camera": {
+    "did": "",
+    "password": "",
+    "deviceType": "184",
+    "userId": 0
+  },
+  "bridge": {
+    "host": "127.0.0.1",
+    "port": 8766
+  },
+  "dashboard": {
+    "host": "127.0.0.1",
+    "port": 8080
+  }
+}
